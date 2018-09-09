@@ -3,8 +3,8 @@ class ApplicationController < ActionController::API
 
   def token
     return if request == nil
+    return if request.env["HTTP_AUTHORIZATION"] == nil
     return request.env["HTTP_AUTHORIZATION"].scan(/Bearer(.*)$/).flatten.last.strip
-
   end
 
   def authenticate
