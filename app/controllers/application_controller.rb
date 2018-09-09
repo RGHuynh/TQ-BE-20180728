@@ -9,5 +9,15 @@ class ApplicationController < ActionController::API
 
   def authenticate
     jwt_decode = JWT.decode(token, ENV['SECRET_KEY'], true, { algorithm: 'HS256' })
+    if params[:id] == jwt_decode[0]["user"].to_s
+      return
+    else
+      return not_found
+    end
+  end
+
+  private
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
   end
 end
