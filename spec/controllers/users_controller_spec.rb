@@ -125,5 +125,6 @@ RSpec.describe UsersController, type: :controller do
       }.to change(User, :count).by(-1)
     end
   end
+  
 
 end
