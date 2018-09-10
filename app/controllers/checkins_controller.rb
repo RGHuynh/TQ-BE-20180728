@@ -2,12 +2,15 @@ class CheckinsController < ApplicationController
   before_action :set_checkin, only: [:show, :update, :destroy]
 
   # # GET /checkins
-  # def index
-  #   @checkins = Checkin.all
+  def index
+    @checkin = Checkin.select("DISTINCT ON (name) *").where(checkin: true)
 
-  #   render json: @checkins
-  # end
+    render json: @checkin
+  end
 
+  def get_user_list 
+    
+  end
   # # GET /checkins/1
   # def show
   #   render json: @checkin

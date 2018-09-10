@@ -5,7 +5,4 @@ class VenuesController < ApplicationController
     render json: @venues_list 
   end
 
-  def checkin
-    
-  end
 end

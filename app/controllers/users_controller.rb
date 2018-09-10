@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   skip_before_action :authenticate, only: [:create]
   before_action :set_user, only: [:show, :update, :destroy]
 
-
   # GET /users/1
   def show
     render json: @user
