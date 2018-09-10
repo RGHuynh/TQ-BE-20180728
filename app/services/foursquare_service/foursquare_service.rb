@@ -49,7 +49,6 @@ class FourSquareService
       return '40.7243, -74.0018'
     else
       return "#{@latitude}, #{@longitude}"
-
     end
   end
 

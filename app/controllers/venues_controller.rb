@@ -4,4 +4,5 @@ class VenuesController < ApplicationController
     @venues_list = venues.get_list_of_venue
     render json: @venues_list 
   end
+
 end
