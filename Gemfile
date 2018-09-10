@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 
 gem 'faraday', '~> 0.9.2'
+gem 'haversine', '~> 0.3.0'
 
 group :development, :test do
   gem 'dotenv-rails'

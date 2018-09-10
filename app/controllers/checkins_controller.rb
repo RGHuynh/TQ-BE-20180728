@@ -1,22 +1,26 @@
 class CheckinsController < ApplicationController
   before_action :set_checkin, only: [:show, :update, :destroy]
 
-  # GET /checkins
-  def index
-    @checkins = Checkin.all
+  # # GET /checkins
+  # def index
+  #   @checkins = Checkin.all
 
-    render json: @checkins
-  end
+  #   render json: @checkins
+  # end
 
-  # GET /checkins/1
-  def show
-    render json: @checkin
-  end
+  # # GET /checkins/1
+  # def show
+  #   render json: @checkin
+  # end
 
   # POST /checkins
   def create
-    @checkin = Checkin.new(checkin_params)
+    checkin_service = CheckinService.new(checkin_params)
+    binding.pry
+    if checkin_service.user_distance?
+      @checkin = Checkin.new(checkin_params[:venue])
 
+    end
     if @checkin.save
       render json: @checkin, status: :created, location: @checkin
     else
@@ -46,6 +50,6 @@ class CheckinsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def checkin_params
-      params.fetch(:checkin, {})
+      params.permit(:longitude, :latitude, :user_id, :checkin, venue: [:latitude, :longitude, :name])
     end
 end
