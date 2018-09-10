@@ -16,10 +16,9 @@ class CheckinsController < ApplicationController
   # POST /checkins
   def create
     checkin_service = CheckinService.new(checkin_params)
-    binding.pry
     if checkin_service.user_distance?
-      @checkin = Checkin.new(checkin_params[:venue])
-
+      binding.pry
+      @checkin = Checkin.new(reconsile_params)
     end
     if @checkin.save
       render json: @checkin, status: :created, location: @checkin
@@ -48,8 +47,19 @@ class CheckinsController < ApplicationController
       @checkin = Checkin.find(params[:id])
     end
 
+    def reconsile_params
+      parameter ={}
+      parameter[:name] = checkin_params[:name]
+      parameter[:longitude] = checkin_params[:longitude]
+      parameter[:latitude] = checkin_params[:latitude]
+      parameter[:user_id] = checkin_params[:user_id]
+      parameter[:checkin] = checkin_params[:checkin]
+
+      parameter
+    end
+
     # Only allow a trusted parameter "white list" through.
     def checkin_params
-      params.permit(:longitude, :latitude, :user_id, :checkin, venue: [:latitude, :longitude, :name])
+      params.permit(:name, :longitude, :latitude, :user_id, :checkin, user: [:latitude, :longitude])
     end
 end
