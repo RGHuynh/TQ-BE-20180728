@@ -15,20 +15,20 @@ class CheckinsController < ApplicationController
 
   # POST /checkins
   def create
+    already_checkin?
     checkin_service = CheckinService.new(checkin_params)
     if checkin_service.user_distance?
-      binding.pry
       @checkin = Checkin.new(reconsile_params)
     end
     if @checkin.save
       render json: @checkin, status: :created, location: @checkin
-    else
-      render json: @checkin.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /checkins/1
   def update
+    checkin = Checkin.find_by(user_id: reconsile_params[:user_id], checkin: 'true')
+    checkin.update(checkin: 'false') if checkin
     if @checkin.update(checkin_params)
       render json: @checkin
     else
@@ -42,6 +42,13 @@ class CheckinsController < ApplicationController
   end
 
   private
+
+    def already_checkin?
+      @checkin = Checkin.find_by(user_id: reconsile_params[:user_id], checkin: true)
+      if @checkin
+        @checkin.update_attribute(:checkin, false)
+      end
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_checkin
       @checkin = Checkin.find(params[:id])
