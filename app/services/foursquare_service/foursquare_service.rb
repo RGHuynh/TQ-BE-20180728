@@ -13,10 +13,9 @@ class FourSquareService
 
     index = 0
     venues =[]
-
     while index < list_of_venues.length 
       venue = {}
-      venue["name"] = list_of_venues[index]["location"]["name"]
+      venue["name"] = list_of_venues[index]["name"]
       venue["latitude"] = list_of_venues[index]["location"]["lat"]
       venue["longitude"] = list_of_venues[index]["location"]["lng"]
 
@@ -47,7 +46,7 @@ class FourSquareService
 
   def coordinates
     if @latitude == nil || @longitude == nil
-      return '40.7243,-74.0018'
+      return '40.7243, -74.0018'
     else
       return "#{@latitude}, #{@longitude}"
 
