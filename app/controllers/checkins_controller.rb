@@ -3,20 +3,16 @@ class CheckinsController < ApplicationController
 
   # # GET /checkins
   def index
-    @checkin = Checkin.select("DISTINCT ON (name) *").where(checkin: true)
+    @checkin = Checkin.select("DISTINCT ON (venue_name) *").where(checkin: true)
 
     render json: @checkin
   end
 
   def get_user_list 
-    
+    checkin_service = CheckinService.new(checkin_params)
+    render json: checkin_service.identify_user
   end
-  # # GET /checkins/1
-  # def show
-  #   render json: @checkin
-  # end
-
-  # POST /checkins
+  
   def create
     already_checkin?
     checkin_service = CheckinService.new(checkin_params)
@@ -59,7 +55,7 @@ class CheckinsController < ApplicationController
 
     def reconsile_params
       parameter ={}
-      parameter[:name] = checkin_params[:name]
+      parameter[:venue_name] = checkin_params[:venue_name]
       parameter[:longitude] = checkin_params[:longitude]
       parameter[:latitude] = checkin_params[:latitude]
       parameter[:user_id] = checkin_params[:user_id]
@@ -70,6 +66,6 @@ class CheckinsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def checkin_params
-      params.permit(:name, :longitude, :latitude, :user_id, :checkin, user: [:latitude, :longitude])
+      params.permit(:venue_name, :longitude, :latitude, :user_id, :checkin, user: [:latitude, :longitude])
     end
 end

@@ -39,44 +39,48 @@ users_params = [
   }
 ]
 
+users_params.each do |user|
+  User.create(user)
+end
+
 checkin_params = [
   {
-    name: "Trinkets And Treasures",
+    venue_name: "Trinkets And Treasures",
     longitude: -119.41792951887157,
     latitude: 36.77825936091546,
     checkin: true,
     user_id: User.find_by(email: "t@gmail.com")[:id]
   },
   {
-    name: "Trinkets And Treasures",
+    venue_name: "Trinkets And Treasures",
     longitude: -119.41792951887157,
     latitude: 36.77825936091546,
     checkin: true,
     user_id: User.find_by(email: "w@gmail.com")[:id]
   },
   {
-    name: "Trinkets And Treasures",
+    venue_name: "Trinkets And Treasures",
     longitude: -119.41792951887157,
     latitude: 36.77825936091546,
     checkin: true,
     user_id: User.find_by(email: "r@gmail.com")[:id]
   },
   {
-    name: "Trinkets And Treasures",
+    venue_name: "Trinkets And Treasures",
     longitude: -119.41792951887157,
     latitude: 36.77825936091546,
     checkin: true,
     user_id: User.find_by(email: "q@gmail.com")[:id]
   },
   {
-    name: "Trinkets And Treasures",
+    venue_name: "Trinkets And Treasures",
     longitude: -119.41792951887157,
     latitude: 36.77825936091546,
     checkin: true,
     user_id: User.find_by(email: "p@gmail.com")[:id]
   },
   {
-    name: "New area",
+    venue_name: "New area",
     longitude: -119.41792951887157,
     latitude: 36.77825936091546,
     checkin: true,
@@ -84,9 +88,7 @@ checkin_params = [
   }
 ]
 
-users_params.each do |user|
-  User.create(user)
-end
+
 
 checkin_params.each do |checkin|
   Checkin.create(checkin)
