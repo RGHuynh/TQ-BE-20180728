@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate
+  skip_before_action :authenticate, :connect_to_webhook
 
   def create_code
     return if !authenticate_params
