@@ -22,7 +22,7 @@ class CheckinService
 
   def identify_user
     user_list = []
-    
+    binding.pry
     list_of_users.each do |user|
       user_id = user[:user_id]
       user_list << User.find(user_id)[:name]

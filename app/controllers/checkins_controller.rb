@@ -1,11 +1,20 @@
 class CheckinsController < ApplicationController
   before_action :set_checkin, only: [:show, :update, :destroy]
+  skip_before_action :connect_to_webhook, only: [:index, :get_user_list, :create]
 
   # # GET /checkins
   def index
     @checkin = Checkin.select("DISTINCT ON (venue_name) *").where(checkin: true)
-
     render json: @checkin
+  end
+
+  def get_recommend_venue
+    if min_checkin?
+      @checkin_recommended = Webhook.where(user_id: params[:user_id]).last
+    else
+      @checkin_recommended = Checkin.where(user_id: params[:user_id]).last
+    end
+    render json: @checkin_recommended
   end
 
   def get_user_list 
@@ -42,12 +51,20 @@ class CheckinsController < ApplicationController
 
   private
 
+    def min_checkin?
+      if Checkin.where(id: params[:id]).count < 10
+        return false
+      end
+      return true
+    end
+
     def already_checkin?
       @checkin = Checkin.find_by(user_id: reconsile_params[:user_id], checkin: true)
       if @checkin
         @checkin.update_attribute(:checkin, false)
       end
     end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_checkin
       @checkin = Checkin.find(params[:id])

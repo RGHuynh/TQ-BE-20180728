@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate, only: [:create]
+  skip_before_action :connect_to_webhook
   before_action :set_user, only: [:show, :update, :destroy]
 
   # GET /users/1
@@ -39,6 +40,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:email, :name, :password)
+      params.permit(:email, :name, :password)
     end
 end
