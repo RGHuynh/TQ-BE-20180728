@@ -31,9 +31,9 @@ gem 'rack-cors'
 
 gem 'faraday', '~> 0.9.2'
 gem 'haversine', '~> 0.3.0'
+gem 'dotenv-rails'
 
 group :development, :test do
-  gem 'dotenv-rails'
   gem 'pry'
   gem 'rspec-rails', '~> 3.8'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
