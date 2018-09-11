@@ -1,6 +1,6 @@
 class CheckinsController < ApplicationController
   before_action :set_checkin, only: [:show, :update, :destroy]
-  skip_before_action :connect_to_webhook, only: [:index, :get_user_list, :create]
+  skip_before_action :connect_to_webhook, only: [:index, :get_user_list, :create, :get_user_list]
 
   # # GET /checkins
   def index
@@ -10,7 +10,7 @@ class CheckinsController < ApplicationController
 
   def get_recommend_venue
     if min_checkin?
-      @checkin_recommended = Webhook.where(user_id: params[:user_id]).last
+      @checkin_recommended = Webhook.where(user_id: params[:user_id]).last  
     else
       @checkin_recommended = Checkin.where(user_id: params[:user_id]).last
     end
