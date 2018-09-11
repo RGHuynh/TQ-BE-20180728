@@ -4,7 +4,6 @@ class WebhooksController < ApplicationController
     data = JSON.parse(request.body.read)
     if !data["error"]
       if Webhook.where(user_id: params[:id], latitude: nil) != []
-        binding.pry
         update_to_user_webhook_latitude
       else
         post_to_user_webhook_longitude
